@@ -1,8 +1,10 @@
-package com.zividig.mobilesafe;
+package com.zividig.mobilesafe.activity;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.zividig.mobilesafe.R;
 
 public class MainActivity extends Activity {
 

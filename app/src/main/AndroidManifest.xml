@@ -17,6 +17,7 @@
         </activity>
 
         <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MobileSafe"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

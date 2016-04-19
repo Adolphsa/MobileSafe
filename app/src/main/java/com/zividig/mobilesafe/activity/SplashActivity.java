@@ -80,7 +80,7 @@ public class SplashActivity extends Activity {
     private void checkVersion() {
         final long startTime = System.currentTimeMillis();
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObject = new JsonObjectRequest("http://192.168.1.101:8080/mobile_safe_update.json", null,
+        JsonObjectRequest jsonObject = new JsonObjectRequest("http://192.168.1.102:8080/mobile_safe_update.json", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

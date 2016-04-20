@@ -12,4 +12,13 @@
     <style name="MyAppTheme" parent="android:Theme.Holo.Light.NoActionBar">
         <item name="android:windowBackground">@mipmap/mobile_splash</item>
     </style>
+
+    <!--引导页TextView样式-->
+    <style name="GuideTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableLeft">@mipmap/star</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

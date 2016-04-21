@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customSettingItem = "http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/GuideTitleStyle"
+        android:text="设置中心"
+        android:gravity="center"
+        />
+
+    <com.zividig.mobilesafe.activity.customView.SettingItemView
+        android:id="@+id/siv_setting_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        customSettingItem:itemTitle="自动更新设置"
+        customSettingItem:itemDesc_on="自动更新已开启"
+        customSettingItem:itemDesc_off="自动更新已关闭"
+        >
+
+    </com.zividig.mobilesafe.activity.customView.SettingItemView>
+</LinearLayout>

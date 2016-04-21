@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -58,20 +59,30 @@ public class SplashActivity extends Activity {
         }
     };
     private TextView tvProgress;
+    private SharedPreferences mPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        mPref = getSharedPreferences("config", MODE_PRIVATE);
+
         TextView versionName = (TextView) findViewById(R.id.tv_version_code);
         tvProgress = (TextView) findViewById(R.id.tv_progress);
         versionName.setText("版本号" + getVersionName());
 
-        checkVersion();
+        //判断是否需要自动更新
+        boolean autoUpdate = mPref.getBoolean("auto_update", true);
+        if (autoUpdate){
+            System.out.println("自动更新开启");
+            checkVersion();
+        }else {
+            //延时2S进入到主界面
+            System.out.println("自动更新关闭");
+            mHandler.sendEmptyMessageDelayed(CODE_ENTER_MAIN_ACTIVITY, 1000);
+        }
 
-//        //延时2S进入到主界面
-//        mHandler.sendEmptyMessageDelayed(CODE_ENTER_MAIN_ACTIVITY, 2000);
     }
 
     /**

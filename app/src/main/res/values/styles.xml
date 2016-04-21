@@ -13,6 +13,16 @@
         <item name="android:windowBackground">@mipmap/mobile_splash</item>
     </style>
 
+    <!--引导页标题TextView样式-->
+    <style name="GuideTitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/holo_blue_light</item>
+    </style>
+
     <!--引导页TextView样式-->
     <style name="GuideTextViewStyle">
         <item name="android:layout_width">wrap_content</item>

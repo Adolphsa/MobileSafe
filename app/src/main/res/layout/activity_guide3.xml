@@ -71,6 +71,7 @@
             android:layout_centerInParent="true"
             />
         <Button
+            android:id="@+id/bt_guide3_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="下一步"
@@ -79,6 +80,7 @@
             android:padding="10dp"
             />
         <Button
+            android:id="@+id/bt_guide3_pre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="上一步"

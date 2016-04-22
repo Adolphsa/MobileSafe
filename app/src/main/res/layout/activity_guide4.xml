@@ -52,14 +52,16 @@
             android:layout_centerInParent="true"
             />
         <Button
+            android:id="@+id/bt_guide4_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="下一步"
+            android:text="设置完成"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:padding="10dp"
             />
         <Button
+            android:id="@+id/bt_guide4_pre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="上一步"

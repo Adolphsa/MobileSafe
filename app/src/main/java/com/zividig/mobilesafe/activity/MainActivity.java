@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.utils.MD5Utils;
 
 public class MainActivity extends Activity {
 
@@ -87,9 +88,10 @@ public class MainActivity extends Activity {
 
                 //判断密码输入框是否为空
                 if (!TextUtils.isEmpty(password)){
-                    if (password.equals(savedPassword)){ //相等
+                    if (MD5Utils.encode(password).equals(savedPassword)){ //相等
                         Toast.makeText(MainActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        startActivity(new Intent(MainActivity.this,MobileSafe.class));
                     }
                     else { //不相等
                         Toast.makeText(MainActivity.this,"密码输入不正确",Toast.LENGTH_SHORT).show();
@@ -136,9 +138,10 @@ public class MainActivity extends Activity {
                 if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(password2)){
                     if (password.equals(password2)){ //相等
                         //保存密码
-                        mPref.edit().putString("password",etPwd.getText().toString()).commit();
+                        mPref.edit().putString("password", MD5Utils.encode(password)).commit();
                         Toast.makeText(MainActivity.this,"设置密码成功",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        startActivity(new Intent(MainActivity.this,MobileSafe.class));
                     }
                     else { //不相等
                         Toast.makeText(MainActivity.this,"两次密码不一样",Toast.LENGTH_SHORT).show();

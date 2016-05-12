@@ -23,6 +23,8 @@
         <activity android:name=".activity.GuideActivity2"/>
         <activity android:name=".activity.GuideActivity3"/>
         <activity android:name=".activity.GuideActivity4"/>
+
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

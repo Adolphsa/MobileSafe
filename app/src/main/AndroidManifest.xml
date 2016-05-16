@@ -23,10 +23,18 @@
         <activity android:name=".activity.GuideActivity2"/>
         <activity android:name=".activity.GuideActivity3"/>
         <activity android:name=".activity.GuideActivity4"/>
+        <activity android:name=".activity.ChoseContact"/>
 
-
+        <!--开机自启动的广播-->
+        <receiver android:name=".activity.receiver.BootComplete">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 </manifest>

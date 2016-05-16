@@ -6,43 +6,63 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.zividig.mobilesafe.R;
 
 /**引导页4
  * Created by Administrator on 2016-04-20.
  */
-public class GuideActivity4 extends Activity {
+public class GuideActivity4 extends BaseActivity {
 
-    private SharedPreferences config;
+
+    private CheckBox cbProtect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide4);
+        cbProtect = (CheckBox) findViewById(R.id.cb_guard);
 
-        config = getSharedPreferences("config", MODE_PRIVATE);
-        //上一步
-        Button guide2PreBtn = (Button) findViewById(R.id.bt_guide4_pre);
-        guide2PreBtn.setOnClickListener(new View.OnClickListener() {
+        Boolean protect = sp.getBoolean("protect",false);
+        if (protect){
+            cbProtect.setText("防盗保护已经开启");
+            cbProtect.setChecked(true);
+        }else{
+            cbProtect.setText("防盗保护没有开启");
+            cbProtect.setChecked(false);
+        }
+
+        cbProtect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GuideActivity4.this,GuideActivity3.class));
-                overridePendingTransition(R.anim.left_in,R.anim.right_out);
-                finish();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    cbProtect.setText("防盗保护已经开启");
+                    sp.edit().putBoolean("protect",true).apply();
+                }else {
+                    cbProtect.setText("防盗保护没有开启");
+                    sp.edit().putBoolean("protect",false).apply();
+                }
             }
         });
 
-        //完成
-        Button guide2NextBtn = (Button) findViewById(R.id.bt_guide4_complete);
-        guide2NextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GuideActivity4.this,MobileSafe.class));
-                config.edit().putBoolean("isFirst",true).commit();
-                overridePendingTransition(R.anim.right_in,R.anim.left_out);
-                finish();
-            }
-        });
+    }
+
+    //完成
+    @Override
+    public void showNextPage() {
+        startActivity(new Intent(GuideActivity4.this,MobileSafe.class));
+        sp.edit().putBoolean("isFirst",true).apply();
+        overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        finish();
+    }
+
+    //上一步
+    @Override
+    public void showPreviousPage() {
+        startActivity(new Intent(GuideActivity4.this,GuideActivity3.class));
+        overridePendingTransition(R.anim.left_in,R.anim.right_out);
+        finish();
     }
 }

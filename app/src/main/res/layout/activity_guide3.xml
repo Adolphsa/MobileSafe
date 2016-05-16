@@ -22,14 +22,18 @@
         android:padding="5dp"
         />
     <EditText
+        android:id="@+id/et_safe_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="请在这输入安全号码"
+        android:inputType="phone"
         />
     <Button
+        android:id="@+id/bt_chose_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="选择联系人"
+        android:onClick="chosePhoneNumber"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,22 +75,10 @@
             android:layout_centerInParent="true"
             />
         <Button
-            android:id="@+id/bt_guide3_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="下一步"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:padding="10dp"
+            style="@style/nextButtonStyle"
             />
         <Button
-            android:id="@+id/bt_guide3_pre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="上一步"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:padding="10dp"
+            style="@style/previousButtonStyle"
             />
     </RelativeLayout>
 </LinearLayout>

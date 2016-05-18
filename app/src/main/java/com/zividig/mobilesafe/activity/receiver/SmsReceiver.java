@@ -1,13 +1,16 @@
 package com.zividig.mobilesafe.activity.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.MobileSafe;
 import com.zividig.mobilesafe.activity.service.LocationService;
 
 /**
@@ -15,8 +18,14 @@ import com.zividig.mobilesafe.activity.service.LocationService;
  * Created by Administrator on 2016-05-17.
  */
 public class SmsReceiver extends BroadcastReceiver {
+
+    private SharedPreferences sp;
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+
         Object[] objects = (Object[]) intent.getExtras().get("pdus");
         String format = intent.getStringExtra("format");
 
@@ -41,7 +50,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 System.out.println("开启定位服务");
                 context.startService(new Intent(context, LocationService.class));
 
-                SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+
                 String location = sp.getString("location", "get location^^");
                 System.out.println(location);
 
@@ -49,8 +58,25 @@ public class SmsReceiver extends BroadcastReceiver {
             }else if ("#*wipedata*#".equals(messageBody)){
                 System.out.println("远程删除数据");
 
+                boolean admin = sp.getBoolean("admin", false);
+                if (admin){
+                    MobileSafe.mDPM.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE); //删除数据
+                }else{
+                    Toast.makeText(context,"请先激活设备",Toast.LENGTH_SHORT).show();
+                }
+
+                abortBroadcast();
             }else if("#*lockscreen*#".equals(messageBody)){
                 System.out.println("远程锁屏");
+
+                boolean admin = sp.getBoolean("admin", false);
+                if (admin){
+                    MobileSafe.mDPM.lockNow(); //锁屏
+                }else{
+                    Toast.makeText(context,"请先激活设备",Toast.LENGTH_SHORT).show();
+                }
+
+                abortBroadcast();
             }
         }
     }

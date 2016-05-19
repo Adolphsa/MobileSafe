@@ -10,7 +10,7 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;
-import com.zividig.mobilesafe.activity.MobileSafe;
+import com.zividig.mobilesafe.activity.view.mobilesafe.MobileSafe;
 import com.zividig.mobilesafe.activity.service.LocationService;
 
 /**

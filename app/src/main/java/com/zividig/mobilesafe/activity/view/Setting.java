@@ -1,4 +1,4 @@
-package com.zividig.mobilesafe.activity;
+package com.zividig.mobilesafe.activity.view;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

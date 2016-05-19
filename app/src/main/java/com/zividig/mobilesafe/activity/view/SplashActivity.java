@@ -1,4 +1,4 @@
-package com.zividig.mobilesafe.activity;
+package com.zividig.mobilesafe.activity.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,6 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 闪屏页面
@@ -71,6 +74,8 @@ public class SplashActivity extends Activity {
         TextView versionName = (TextView) findViewById(R.id.tv_version_code);
         tvProgress = (TextView) findViewById(R.id.tv_progress);
         versionName.setText("版本号" + getVersionName());
+
+        copyDB("address.db"); //复制数据库
 
         //判断是否需要自动更新
         boolean autoUpdate = mPref.getBoolean("auto_update", true);
@@ -280,6 +285,38 @@ public class SplashActivity extends Activity {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //拷贝数据库
+    private void copyDB(String dbName){
+
+        File destinationFile = new File(getFilesDir(),dbName);
+        System.out.println("目标地址:" + destinationFile);
+
+        InputStream in = null;
+        FileOutputStream out = null;
+
+        try {
+            in = getAssets().open(dbName); //从raw文件中获取数据库
+            out = new FileOutputStream(destinationFile);
+
+            int len;
+            byte [] buffer = new byte[1024];
+            while ((len = in.read(buffer)) != -1){
+                out.write(buffer,0,len);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                in.close();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 
 }

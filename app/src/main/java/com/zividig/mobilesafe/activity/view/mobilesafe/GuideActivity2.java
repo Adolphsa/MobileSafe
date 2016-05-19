@@ -1,14 +1,10 @@
-package com.zividig.mobilesafe.activity;
+package com.zividig.mobilesafe.activity.view.mobilesafe;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.telecom.TelecomManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;

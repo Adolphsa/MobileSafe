@@ -1,4 +1,4 @@
-package com.zividig.mobilesafe.activity;
+package com.zividig.mobilesafe.activity.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.view.atools.AToolsMain;
+import com.zividig.mobilesafe.activity.view.mobilesafe.MobileSafe;
 import com.zividig.mobilesafe.activity.utils.MD5Utils;
 
 public class MainActivity extends Activity {
@@ -49,6 +50,12 @@ public class MainActivity extends Activity {
                     case 0: //手机安全
                         showDialog();
                         break;
+
+                    case 7: //高级工具
+                        Intent intent7 = new Intent(MainActivity.this, AToolsMain.class);
+                        startActivity(intent7);
+                        break;
+
                     case 8: //设置
                         Intent intent8 = new Intent(MainActivity.this,Setting.class);
                         startActivity(intent8);

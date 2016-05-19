@@ -1,4 +1,4 @@
-package com.zividig.mobilesafe.activity;
+package com.zividig.mobilesafe.activity.view.mobilesafe;
 
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;

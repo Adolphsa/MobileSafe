@@ -2,6 +2,7 @@ package com.zividig.mobilesafe.activity.view.atools;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -52,13 +53,23 @@ public class PhoneQueryTool extends Activity {
 
     }
 
+    //开始查询
     public void query(View view){
         String number = etPhone.getText().toString().trim();
         if (!TextUtils.isEmpty(number)){
             String address = AddressDao.getAddress(number);
             tvDestinationPhone.setText(address);
 
+        }else {
+            vibrator();
         }
 
+    }
+
+    //震动
+    public void vibrator(){
+
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibrator.vibrate(new long[]{1000,2000,1000,2000},-1);
     }
 }

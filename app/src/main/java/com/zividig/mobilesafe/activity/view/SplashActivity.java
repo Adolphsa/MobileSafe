@@ -26,6 +26,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.service.PhoneAddressService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +89,11 @@ public class SplashActivity extends Activity {
             mHandler.sendEmptyMessageDelayed(CODE_ENTER_MAIN_ACTIVITY, 1000);
         }
 
+        //判断是否需要需要启动电话归属地查询服务
+        boolean phoneAddress = mPref.getBoolean("phone_address_service",false);
+        if (phoneAddress){
+            startService(new Intent(this, PhoneAddressService.class));
+        }
     }
 
     /**

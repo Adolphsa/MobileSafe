@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.customView.SettingItemClickView;
 import com.zividig.mobilesafe.activity.customView.SettingItemView;
 import com.zividig.mobilesafe.activity.service.PhoneAddressService;
 import com.zividig.mobilesafe.activity.view.atools.ServiceStateCheck;
@@ -28,8 +29,9 @@ public class Setting extends Activity {
 
         mPref = getSharedPreferences("config", MODE_PRIVATE);
 
-       initAutoUpdate();
-       initPhoneAddress();
+        initAutoUpdate();
+        initPhoneAddress();
+        initPhoneAddressStyle();
     }
 
     //自动更新开关
@@ -49,10 +51,10 @@ public class Setting extends Activity {
             public void onClick(View v) {
                 if (sivAutoUpdate.isCheck()){
                     sivAutoUpdate.setCbItem(false);
-                    mPref.edit().putBoolean("auto_update",false).commit();
+                    mPref.edit().putBoolean("auto_update",false).apply();
                 }else {
                     sivAutoUpdate.setCbItem(true);
-                    mPref.edit().putBoolean("auto_update",false).commit();
+                    mPref.edit().putBoolean("auto_update",false).apply();
                 }
             }
         });
@@ -76,10 +78,24 @@ public class Setting extends Activity {
                 if (sivPhoneAddress.isCheck()){
                     sivPhoneAddress.setCbItem(false);
                     stopService(intent); //停止服务
+                    mPref.edit().putBoolean("phone_address_service",false).apply();
                 }else {
                     sivPhoneAddress.setCbItem(true);
                     startService(intent); //开始服务
+                    mPref.edit().putBoolean("phone_address_service",true).apply();
                 }
+            }
+        });
+    }
+
+    //电话归属地的风格
+    private void initPhoneAddressStyle(){
+        SettingItemClickView sicv = (SettingItemClickView) findViewById(R.id.siv_setting_phone_address_style);
+        sicv.setTvItemDesrc("苹果绿");
+        sicv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("电话归属地被点击了");
             }
         });
     }

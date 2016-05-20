@@ -30,6 +30,8 @@
 
         <!--定位服务-->
         <service android:name=".activity.service.LocationService"/>
+        <!--来电的服务-->
+        <service android:name=".activity.service.PhoneAddressService"/>
 
         <!--开机自启动的广播-->
         <receiver android:name=".activity.receiver.BootComplete">
@@ -70,4 +72,5 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 </manifest>

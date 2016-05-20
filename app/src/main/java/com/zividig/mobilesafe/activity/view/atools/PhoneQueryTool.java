@@ -32,6 +32,7 @@ public class PhoneQueryTool extends Activity {
         btQuery = (Button) findViewById(R.id.bt_query);
         tvDestinationPhone = (TextView) findViewById(R.id.tv_destination_phone);
 
+        //监听文本框的变化
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,7 +62,7 @@ public class PhoneQueryTool extends Activity {
             tvDestinationPhone.setText(address);
 
         }else {
-            vibrator();
+            vibrator(); //震动
         }
 
     }
@@ -70,6 +71,6 @@ public class PhoneQueryTool extends Activity {
     public void vibrator(){
 
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(new long[]{1000,2000,1000,2000},-1);
+        vibrator.vibrate(new long[]{1000,2000,1000,500},-1);
     }
 }

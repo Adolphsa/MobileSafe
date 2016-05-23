@@ -23,6 +23,8 @@ public class DragView extends Activity{
     private int startX;
     private int startY;
     private SharedPreferences mPref;
+    private int mWidth;
+    private int mHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +33,26 @@ public class DragView extends Activity{
 
         mPref = getSharedPreferences("config",MODE_PRIVATE);
 
+        //获取屏幕的宽度和高度
+        mWidth = getWindowManager().getDefaultDisplay().getWidth();
+        mHeight = getWindowManager().getDefaultDisplay().getHeight();
+
         tvTop = (TextView) findViewById(R.id.tv_top);
         ivDrag = (ImageView) findViewById(R.id.iv_drag);
         tvBottom = (TextView) findViewById(R.id.tv_bottom);
 
         int lastX = mPref.getInt("lastX", 0);
         int lastY = mPref.getInt("lastY", 0);
+
+        //判断该显示上面的文本还是下面的文本
+        if (lastY > mHeight/2){
+            tvTop.setVisibility(View.INVISIBLE);
+            tvBottom.setVisibility(View.VISIBLE);
+        }else {
+            tvTop.setVisibility(View.VISIBLE);
+            tvBottom.setVisibility(View.INVISIBLE);
+        }
+
         //获取布局对象
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ivDrag.getLayoutParams();
         layoutParams.leftMargin = lastX;
@@ -66,6 +82,18 @@ public class DragView extends Activity{
                         int t = ivDrag.getTop() + dy; //上
                         int r = ivDrag.getRight() + dx; //右
                         int b = ivDrag.getBottom() + dy; //下
+
+                        if (l<0 || t<0 || r>mWidth || b>mHeight-20){ //超出屏幕宽度就break
+                            break;
+                        }
+
+                        if (event.getRawY() > mHeight/2){
+                            tvTop.setVisibility(View.INVISIBLE);
+                            tvBottom.setVisibility(View.VISIBLE);
+                        }else {
+                            tvTop.setVisibility(View.VISIBLE);
+                            tvBottom.setVisibility(View.INVISIBLE);
+                        }
                         ivDrag.layout(l,t,r,b);
 
                         //重新初始化起点坐标

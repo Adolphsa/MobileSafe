@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -112,6 +113,13 @@ public class PhoneAddressService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
+        params.gravity = Gravity.LEFT + Gravity.TOP; //重新设置显示窗口的中心为左上角
+
+        //设置showToast的位置
+        int lastX = mPref.getInt("lastX", 0);
+        int lastY = mPref.getInt("lastY", 0);
+        params.x = lastX;
+        params.y = lastY;
 
         view = View.inflate(this, R.layout.layout_phone_address_style,null);
         int[] bgStyle = new int[]{R.drawable.call_locate_white,

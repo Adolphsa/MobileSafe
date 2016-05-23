@@ -22,7 +22,9 @@
         <activity android:name=".activity.view.atools.AToolsMain"/>
         <activity android:name=".activity.view.atools.PhoneQueryTool"/>
         <activity android:name=".activity.view.Setting"/>
-        <activity android:name=".activity.view.DragView"/>
+        <activity android:name=".activity.view.DragView"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
         <activity android:name=".activity.view.mobilesafe.GuideActivity1"/>
         <activity android:name=".activity.view.mobilesafe.GuideActivity2"/>
         <activity android:name=".activity.view.mobilesafe.GuideActivity3"/>

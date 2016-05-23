@@ -5,16 +5,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.zividig.mobilesafe.R;
 import com.zividig.mobilesafe.activity.view.atools.AddressDao;
 
 /**
@@ -27,7 +28,8 @@ public class PhoneAddressService extends Service {
     private MyListener listener;
     private CallReceiver callReceiver;
     private WindowManager mWM;
-    private TextView view;
+    private View view;
+    private SharedPreferences mPref;
 
     @Nullable
     @Override
@@ -38,6 +40,8 @@ public class PhoneAddressService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        mPref = getSharedPreferences("config",MODE_PRIVATE);
+
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         listener = new MyListener();
         tm.listen(listener,PhoneStateListener.LISTEN_CALL_STATE);
@@ -92,6 +96,7 @@ public class PhoneAddressService extends Service {
         unregisterReceiver(callReceiver); //移除广播
     }
 
+    //来电显示的窗口风格
     public void showToast(String text){
 
         mWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -107,9 +112,17 @@ public class PhoneAddressService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
-        view = new TextView(this);
-        view.setText(text);
-        view.setTextColor(Color.BLUE);
+
+        view = View.inflate(this, R.layout.layout_phone_address_style,null);
+        int[] bgStyle = new int[]{R.drawable.call_locate_white,
+                R.drawable.call_locate_orange, R.drawable.call_locate_blue,
+                R.drawable.call_locate_gray, R.drawable.call_locate_green
+
+        };
+        int style = mPref.getInt("phone_style",0);
+        view.setBackgroundResource(bgStyle[style]);
+        TextView textView = (TextView) view.findViewById(R.id.tv_address);
+        textView.setText(text);
         mWM.addView(view,params);
     }
 }

@@ -12,7 +12,6 @@
             android:textSize="18sp"
             android:padding="3dp"
             android:textColor="@android:color/black"
-            android:text="电话归属地显示风格"
             />
         <TextView
             android:id="@+id/tv_setting_item_desrc"

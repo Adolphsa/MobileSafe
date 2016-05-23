@@ -14,8 +14,6 @@ import com.zividig.mobilesafe.R;
  */
 public class SettingItemClickView extends RelativeLayout {
 
-    private static final String NAMESPACE = "http://schemas.android.com/apk/res-auto";
-
     private TextView tvItemTitle;
     private TextView tvItemDesrc;
 

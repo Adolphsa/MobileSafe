@@ -32,6 +32,13 @@
         android:id="@+id/siv_setting_phone_address_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/item_background"
+        />
+    <com.zividig.mobilesafe.activity.customView.SettingItemClickView
+        android:id="@+id/siv_setting_phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_background"
         />
 
 </LinearLayout>

@@ -1,8 +1,11 @@
 package com.zividig.mobilesafe.activity.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +28,8 @@ public class DragView extends Activity{
     private SharedPreferences mPref;
     private int mWidth;
     private int mHeight;
+
+    long[] mHits = new long[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,25 @@ public class DragView extends Activity{
         layoutParams.topMargin = lastY;
         ivDrag.setLayoutParams(layoutParams);
 
+        //图片的点击事件
+        ivDrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //多次点击事件
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length-1);
+                mHits[mHits.length-1] = SystemClock.uptimeMillis();
+                if (mHits[0] >= (SystemClock.uptimeMillis()-500)) {
+                    System.out.println("双击啦");
+                    //居中
+                    ivDrag.layout(mWidth/2 - ivDrag.getWidth()/2,
+                            ivDrag.getTop(),
+                            mWidth/2 + ivDrag.getWidth()/2,
+                            ivDrag.getBottom());
+                }
+            }
+        });
+
+        //图片的触摸事件
         ivDrag.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -108,7 +132,7 @@ public class DragView extends Activity{
                         edit.apply();
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }

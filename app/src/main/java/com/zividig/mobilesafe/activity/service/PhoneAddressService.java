@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -31,6 +32,11 @@ public class PhoneAddressService extends Service {
     private WindowManager mWM;
     private View view;
     private SharedPreferences mPref;
+
+    private int startX;
+    private int startY;
+    private int mWidth;
+    private int mHeight;
 
     @Nullable
     @Override
@@ -103,15 +109,19 @@ public class PhoneAddressService extends Service {
         mWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
 
-        WindowManager.LayoutParams params = mParams;
+        //获取屏幕的宽度和高度
+        mWidth = mWM.getDefaultDisplay().getWidth();
+        mHeight = mWM.getDefaultDisplay().getHeight();
+
+        final WindowManager.LayoutParams params = mParams;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.format = PixelFormat.TRANSLUCENT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        params.type = WindowManager.LayoutParams.TYPE_PHONE;
         params.setTitle("Toast");
         params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+
 
         params.gravity = Gravity.LEFT + Gravity.TOP; //重新设置显示窗口的中心为左上角
 
@@ -132,5 +142,58 @@ public class PhoneAddressService extends Service {
         TextView textView = (TextView) view.findViewById(R.id.tv_address);
         textView.setText(text);
         mWM.addView(view,params);
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("触摸了");
+
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        //获取起点的X,Y坐标
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        //获取终点的X,Y坐标
+                        int endX = (int) event.getRawX();
+                        int endY = (int) event.getRawY();
+
+                        //计算x,y的偏移量
+                        int dx = endX - startX;
+                        int dy = endY - startY;
+
+                        params.x += dx;
+                        params.y += dy;
+                        //检查显示框位置的偏差
+                        if (params.x < 0){
+                            params.x = 0;
+                        }
+                        if (params.y < 0){
+                            params.y = 0;
+                        }
+                        if (params.x > mWidth-view.getWidth()){
+                            params.x = mWidth-view.getWidth();
+                        }
+                        if (params.y > mWidth-view.getHeight()){
+                            params.y = mWidth-view.getHeight();
+                        }
+                        mWM.updateViewLayout(view,params);
+
+                        //重新初始化起点坐标
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //鼠标抬起后记录当前的位置
+                        SharedPreferences.Editor edit = mPref.edit();
+                        edit.putInt("lastX",params.x);
+                        edit.putInt("lastY",params.y);
+                        edit.apply();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 }

@@ -175,8 +175,8 @@ public class PhoneAddressService extends Service {
                         if (params.x > mWidth-view.getWidth()){
                             params.x = mWidth-view.getWidth();
                         }
-                        if (params.y > mWidth-view.getHeight()){
-                            params.y = mWidth-view.getHeight();
+                        if (params.y > mHeight-view.getHeight()){
+                            params.y = mHeight-view.getHeight();
                         }
                         mWM.updateViewLayout(view,params);
 

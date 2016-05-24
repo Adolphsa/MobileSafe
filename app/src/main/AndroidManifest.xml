@@ -30,11 +30,14 @@
         <activity android:name=".activity.view.mobilesafe.GuideActivity3"/>
         <activity android:name=".activity.view.mobilesafe.GuideActivity4"/>
         <activity android:name=".activity.view.mobilesafe.ChoseContact"/>
+        <activity android:name=".activity.view.CleanCache"/>
 
         <!--定位服务-->
         <service android:name=".activity.service.LocationService"/>
         <!--来电的服务-->
         <service android:name=".activity.service.PhoneAddressService"/>
+        <!--火箭的服务-->
+        <service android:name=".activity.service.RocketService"/>
 
         <!--开机自启动的广播-->
         <receiver android:name=".activity.receiver.BootComplete">

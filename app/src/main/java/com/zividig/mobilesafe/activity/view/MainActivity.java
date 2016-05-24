@@ -51,6 +51,11 @@ public class MainActivity extends Activity {
                         showDialog();
                         break;
 
+                    case 6: //缓存清理
+                        Intent intent6 = new Intent(MainActivity.this, CleanCache.class);
+                        startActivity(intent6);
+                        break;
+
                     case 7: //高级工具
                         Intent intent7 = new Intent(MainActivity.this, AToolsMain.class);
                         startActivity(intent7);

@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.zividig.mobilesafe.R;
 import com.zividig.mobilesafe.activity.service.RocketService;
+import com.zividig.mobilesafe.activity.utils.ExitAppUtils;
 
 /**
  * 清理缓存
@@ -17,11 +18,14 @@ public class CleanCache extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clean_cache);
+
+        ExitAppUtils.getInstance().addActivity(this);
+
     }
 
     public void startRocket(View view){
         startService(new Intent(CleanCache.this, RocketService.class));
-        finish();
+        ExitAppUtils.getInstance().exit();
     }
 
     public void stopRocket(View view){

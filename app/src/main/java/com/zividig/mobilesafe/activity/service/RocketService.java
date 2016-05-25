@@ -5,15 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.view.RocketBackground;
 
 /**
  * 小火箭的服务
@@ -29,6 +34,7 @@ public class RocketService extends Service {
     private int mWidth;
     private int mHeight;
     private WindowManager.LayoutParams params;
+    AnimationDrawable rocketAnimation;
 
     @Nullable
     @Override
@@ -55,13 +61,14 @@ public class RocketService extends Service {
         params.setTitle("Toast");
         params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-
-
         params.gravity = Gravity.LEFT + Gravity.TOP; //重新设置显示窗口的中心为左上角
 
 
         view = View.inflate(this, R.layout.service_rocket,null);
-
+        ImageView rocketImage = (ImageView) view.findViewById(R.id.iv_rocket);
+        rocketImage.setBackgroundResource(R.drawable.smoke);
+        rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+        rocketAnimation.start();
 
         mWM.addView(view, params);
 
@@ -106,9 +113,14 @@ public class RocketService extends Service {
                         startY = (int) event.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (params.x > 300 && params.x < 450 && params.y > mHeight-150){
+                        if (params.x > (mWidth/2-150) && params.x < (mWidth/2+150) && params.y > mHeight-150){
                             System.out.println("发射火箭");
+
                             showRocket();
+                            Intent intent = new Intent(RocketService.this, RocketBackground.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+
                         }
                         break;
                 }
@@ -118,15 +130,42 @@ public class RocketService extends Service {
 
     }
 
-    public void showRocket(){
-
-        int pos = 450;
-        for (int i=0; i<=10; i++){
-
-            params.y = pos - 45*i;
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int y = msg.arg1;
+            params.y = y;
             mWM.updateViewLayout(view,params);
         }
+    };
+
+    //展示火箭
+    public void showRocket(){
+        //火箭居中
+        params.x = mWidth/2 - view.getWidth()/2;
+        mWM.updateViewLayout(view,params);
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                int pos = 450;
+                for (int i=0; i<=10; i++){
+                    try {
+                        Thread.sleep(40);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    int y = pos - 45*i;
+                    Message ms = Message.obtain();
+                    ms.arg1 = y;
+                    handler.sendMessage(ms);
+                }
+            }
+        }.start();
+
     }
 
     @Override

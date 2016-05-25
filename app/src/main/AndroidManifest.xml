@@ -31,6 +31,9 @@
         <activity android:name=".activity.view.mobilesafe.GuideActivity4"/>
         <activity android:name=".activity.view.mobilesafe.ChoseContact"/>
         <activity android:name=".activity.view.CleanCache"/>
+        <activity android:name=".activity.view.RocketBackground"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
 
         <!--定位服务-->
         <service android:name=".activity.service.LocationService"/>

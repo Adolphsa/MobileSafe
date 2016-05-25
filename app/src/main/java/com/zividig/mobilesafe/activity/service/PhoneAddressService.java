@@ -146,8 +146,6 @@ public class PhoneAddressService extends Service {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("触摸了");
-
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         //获取起点的X,Y坐标
@@ -165,6 +163,7 @@ public class PhoneAddressService extends Service {
 
                         params.x += dx;
                         params.y += dy;
+
                         //检查显示框位置的偏差
                         if (params.x < 0){
                             params.x = 0;

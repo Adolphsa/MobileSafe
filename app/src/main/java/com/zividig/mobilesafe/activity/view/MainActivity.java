@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zividig.mobilesafe.R;
+import com.zividig.mobilesafe.activity.utils.ExitAppUtils;
 import com.zividig.mobilesafe.activity.view.atools.AToolsMain;
 import com.zividig.mobilesafe.activity.view.mobilesafe.MobileSafe;
 import com.zividig.mobilesafe.activity.utils.MD5Utils;
@@ -36,6 +37,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ExitAppUtils.getInstance().addActivity(this);
+
         mPref = getSharedPreferences("config", MODE_PRIVATE);
 
         glMainMenu = (GridView) findViewById(R.id.gl_main_menu);
@@ -53,6 +56,7 @@ public class MainActivity extends Activity {
 
                     case 6: //缓存清理
                         Intent intent6 = new Intent(MainActivity.this, CleanCache.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent6);
                         break;
 

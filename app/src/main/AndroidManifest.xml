@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zividig.mobilesafe">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -9,78 +22,71 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo.Light.NoActionBar">
-        <activity android:name=".activity.view.SplashActivity" android:theme="@style/MyAppTheme">
+        <activity
+            android:name=".activity.view.SplashActivity"
+            android:theme="@style/MyAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.view.MainActivity" />
+        <activity android:name=".activity.view.mobilesafe.MobileSafe" />
+        <activity android:name=".activity.view.atools.AToolsMain" />
+        <activity android:name=".activity.view.atools.PhoneQueryTool" />
+        <activity android:name=".activity.view.Setting" />
+        <activity
+            android:name=".activity.view.DragView"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.view.mobilesafe.GuideActivity1" />
+        <activity android:name=".activity.view.mobilesafe.GuideActivity2" />
+        <activity android:name=".activity.view.mobilesafe.GuideActivity3" />
+        <activity android:name=".activity.view.mobilesafe.GuideActivity4" />
+        <activity android:name=".activity.view.mobilesafe.ChoseContact" />
+        <activity android:name=".activity.view.CleanCache" />
+        <activity
+            android:name=".activity.view.RocketBackground"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.view.callsafe.CallSmsSafeActivity" />
 
-        <activity android:name=".activity.view.MainActivity"/>
-        <activity android:name=".activity.view.mobilesafe.MobileSafe"/>
-        <activity android:name=".activity.view.atools.AToolsMain"/>
-        <activity android:name=".activity.view.atools.PhoneQueryTool"/>
-        <activity android:name=".activity.view.Setting"/>
-        <activity android:name=".activity.view.DragView"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            />
-        <activity android:name=".activity.view.mobilesafe.GuideActivity1"/>
-        <activity android:name=".activity.view.mobilesafe.GuideActivity2"/>
-        <activity android:name=".activity.view.mobilesafe.GuideActivity3"/>
-        <activity android:name=".activity.view.mobilesafe.GuideActivity4"/>
-        <activity android:name=".activity.view.mobilesafe.ChoseContact"/>
-        <activity android:name=".activity.view.CleanCache"/>
-        <activity android:name=".activity.view.RocketBackground"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            />
+        <!-- 定位服务 -->
+        <service android:name=".activity.service.LocationService" />
+        <!-- 来电的服务 -->
+        <service android:name=".activity.service.PhoneAddressService" />
+        <!-- 火箭的服务 -->
+        <service android:name=".activity.service.RocketService" />
 
-        <!--定位服务-->
-        <service android:name=".activity.service.LocationService"/>
-        <!--来电的服务-->
-        <service android:name=".activity.service.PhoneAddressService"/>
-        <!--火箭的服务-->
-        <service android:name=".activity.service.RocketService"/>
-
-        <!--开机自启动的广播-->
+        <!-- 开机自启动的广播 -->
         <receiver android:name=".activity.receiver.BootComplete">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <!--接收短信的广播-->
+        <!-- 接收短信的广播 -->
         <receiver android:name=".activity.receiver.SmsReceiver">
-            <intent-filter
-                android:priority="2147483647">
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <!--设备管理器的广播-->
-        <receiver android:name=".activity.receiver.AdminReceiver"
-            android:label="@string/sample_device_admin"
+        <!-- 设备管理器的广播 -->
+        <receiver
+            android:name=".activity.receiver.AdminReceiver"
             android:description="@string/sample_device_admin_description"
+            android:label="@string/sample_device_admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data android:name="android.app.device_admin"
+            <meta-data
+                android:name="android.app.device_admin"
                 android:resource="@xml/device_admin_sample" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+
+
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 </manifest>

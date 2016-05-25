@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.zividig.mobilesafe.R;
 import com.zividig.mobilesafe.activity.utils.ExitAppUtils;
 import com.zividig.mobilesafe.activity.view.atools.AToolsMain;
+import com.zividig.mobilesafe.activity.view.callsafe.CallSmsSafeActivity;
 import com.zividig.mobilesafe.activity.view.mobilesafe.MobileSafe;
 import com.zividig.mobilesafe.activity.utils.MD5Utils;
 
@@ -52,6 +53,11 @@ public class MainActivity extends Activity {
                 switch (position){
                     case 0: //手机安全
                         showDialog();
+                        break;
+
+                    case 1: //通讯卫士
+                        Intent intent1 = new Intent(MainActivity.this, CallSmsSafeActivity.class);
+                        startActivity(intent1);
                         break;
 
                     case 6: //缓存清理

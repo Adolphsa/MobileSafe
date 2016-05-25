@@ -3,7 +3,6 @@ package com.zividig.mobilesafe.activity.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
@@ -15,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.zividig.mobilesafe.R;
 import com.zividig.mobilesafe.activity.view.RocketBackground;

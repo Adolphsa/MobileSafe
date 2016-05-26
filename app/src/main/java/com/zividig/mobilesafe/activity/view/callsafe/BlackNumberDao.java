@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.SystemClock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class BlackNumberDao {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("number",number);
-        values.put("node",mode);
+        values.put("mode",mode);
         long rowID = db.insert("blacknumber", null, values);
         if (rowID == -1){
             return false;
@@ -113,8 +114,13 @@ public class BlackNumberDao {
         }
         cursor.close();
         db.close();
-
+        SystemClock.sleep(2000);
         return blackNumberInfos;
     }
+
+//    public void deleteAll(Context context){
+//        context.deleteDatabase("blackNumber.db");
+//        System.out.println("删除了");
+//    }
 }
 
